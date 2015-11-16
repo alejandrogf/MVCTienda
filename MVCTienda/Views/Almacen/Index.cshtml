@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MVCTienda.Models.Almacen>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Listado de Almacenes</h1>
+
+@foreach (var item in Model)
+{
+    //Con el codigo de esta forma, con un partial, creas una especie de plantilla donde pones el codigo
+    //que necesitas, por si tienes reutilizar varias veces.
+    //Si quieres que funcione en todas partes, tienes que ponerlo en la carpeta shared, para que todos
+    //los controllers puedan llamarlo.
+    @Html.Partial("_fichaAlmacen",item)
+}
+
+@*Cuando se añade código javascript siempre dará error a menos que se modifique cierta información
+en la página shared/layout*@
+@section MiJavaScript
+{
+ <script>
+    $(".borrame").click(function() {
+        var resp = confirm("¿Estás seguro?");
+        if (resp) {
+            var id = $(this).attr("data-id");
+            //Para construir la url se puede hacer harcodeada a mano o bien con helpers/codigo
+            //En este caso la instrucción url.action("nombre vista") obtiene la url de la vista
+            //para borrar. La poner las comillas dobles, se hace que utilice el resultado como
+            //un literal y luego se concatenan los datos restantes.
+            location.href = "@Url.Action("Borrar")" + "/" + id;
+        }
+    });
+</script>   
+}

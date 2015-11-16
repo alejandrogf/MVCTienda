@@ -1,0 +1,27 @@
+﻿@model MVCTienda.Models.Almacen
+    
+<div class="col-md-3">
+    @*DisplayNameFor es para obtener el nombre del campo.*@
+    <b>@Html.DisplayNameFor(o => Model.Nombre)</b>
+    @*DisplayFor es para obtener el valor del campo.*@
+    @Html.DisplayFor(o => Model.Nombre)
+    <br/>
+    @* El action link, cuando es shared y tiene que recibir el controller sobre el que actua, tiene
+    que recibir los datos con el siguiente formato:
+    nombre - funcion - controller - elemento sobre el que actuar - parametros html
+    EJ:@Html.ActionLink("Ver Mas", "Detalle", "Almacen", new { id = Model.idAlmacen }, new {target="_blank"})
+        no se pone AlmacenController, porque el tipo es muy listo y sabe buscar por defecto dentro 
+        de los controllers y sabe concatenar lo que yo pongo, almacen, con "controller".
+    *@
+    @Html.ActionLink("Ver Mas", "Detalle", "Almacen", new { id = Model.idAlmacen }, null)
+    <br /><br />
+    <p>
+        @Html.ActionLink("Modificar", "Modificar", "Almacen", new { id = Model.idAlmacen }, null)
+        @*Para interaccion con usuario, siempre con javascript.
+            Las etiquetas "data-*" sirven para crear etiquetas personalizadas para usos concretos.
+            Por ejemplo en este caso con la etiqueta data-id se le asigna el idAlmacen para que
+            tenga la información necesaria para poder realizar el borrado.*@
+        <a href="#" class="borrame" data-id="@Model.idAlmacen">Borrar</a>
+        @*@Html.ActionLink("Eliminar", "Borrar", "Almacen", new { id = Model.idAlmacen }, null)*@
+    </p>
+</div>

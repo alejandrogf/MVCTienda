@@ -1,0 +1,39 @@
+﻿@model MVCTienda.Models.Almacen
+
+@{
+    ViewBag.Title = "title";
+    
+}
+
+<h2>Modificar Almacen</h2>
+
+@using (Html.BeginForm())
+{
+    //La medida de seguridad antibots, tipo captcha pero invisible ya que
+    //es código inyectado.
+    @Html.AntiForgeryToken()
+    //Para mostrar un resumen de los campos erroneso del formulario
+    //en la parte superior en lugar de al lado de cada campo.
+    //Poniendo el false se fuerza a que pase todos los errores, si no
+    //se pone no muestra los errores de las propiedades de los campos
+    @Html.ValidationSummary(false)
+    //Oculta un campo.
+    @Html.HiddenFor(o=>o.idAlmacen)
+
+    <div>
+        @Html.LabelFor(o => o.Nombre)
+        @Html.EditorFor(o => o.Nombre)
+    </div>
+
+    <div>
+        @Html.LabelFor(o => o.Ciudad)
+        @Html.EditorFor(o => o.Ciudad)
+    </div>
+
+    <div>
+        @Html.LabelFor(o => o.CPostal)
+        @Html.EditorFor(o => o.CPostal)
+    </div>
+
+    <input type="submit" value="Guardar" class="btn btn-default"/>
+}

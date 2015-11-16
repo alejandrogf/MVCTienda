@@ -1,0 +1,13 @@
+﻿@model MVCTienda.Models.Almacen
+
+@{
+    ViewBag.Title = "Detalle";
+}
+
+<h2>Detalle de @Html.DisplayFor(o => o.Nombre)</h2>
+<h3>@Model.CPostal</h3>
+<h3>@Model.Ciudad</h3>
+<br/><br />
+
+@Html.ActionLink("Volver", "Index")
+
