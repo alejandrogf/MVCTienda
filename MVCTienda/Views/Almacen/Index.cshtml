@@ -1,10 +1,16 @@
-﻿@model IEnumerable<MVCTienda.Models.Almacen>
+﻿@using MVCTienda.Models
+@model IEnumerable<MVCTienda.Models.Almacen>
 
 @{
-    ViewBag.Title = "Index";
+    var etiquetas = ViewBag.etiquetas as List<Etiqueta>;
 }
 
-<h1>Listado de Almacenes</h1>
+<h1>@ViewData["Titulo"]</h1>
+
+@foreach (var etiq in etiquetas)
+{
+    <h3>@etiq.Texto</h3>
+}
 
 @foreach (var item in Model)
 {

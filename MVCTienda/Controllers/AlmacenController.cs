@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MVCTienda.Filtros;
 using MVCTienda.Models;
 
 namespace MVCTienda.Controllers
@@ -13,12 +14,16 @@ namespace MVCTienda.Controllers
         //Conexión a la BD
         private Tienda09Entities db = new Tienda09Entities();
 
+
         //Las acciones a realizar, si no se indican una instruccion
         //HTTPPOST u otra, siempre las toma como de tipo GET.
 
         // GET: Almacen
         public ActionResult Index()
         {
+            var info = db.Etiqueta;
+            ViewBag.etiquetas = info.ToList();
+            ViewData["Titulo"] = "Listado de Almacenes";
             var data = db.Almacen;
             return View(data);
         }
@@ -28,7 +33,11 @@ namespace MVCTienda.Controllers
             var data = db.Almacen.Find(id);
             return View(data);
         }
-
+        //Ver Carpeta Filtros->FiltroId.
+        //Entre corchetes es un atributo, que afecta sólo a justo lo que venga después.
+        //En este caso el filtro sólo se aplica a las instrucciones de modificar y borrar, 
+        //si tuviese otras instrucciones, por ejemplo duplicar, no afectaria.
+        [FiltroId]
         //Si no se usa AJAX, el modificar se hace en dos pasos. Por eso hay dos instrucciones.
         public ActionResult Modificar(int id)
         {
@@ -55,7 +64,11 @@ namespace MVCTienda.Controllers
             }
             return View(objetoAlmacen);
         }
-
+        //Ver Carpeta Filtros->FiltroId.
+        //Entre corchetes es un atributo, que afecta sólo a justo lo que venga después.
+        //En este caso el filtro sólo se aplica a las instrucciones de modificar y borrar, 
+        //si tuviese otras instrucciones, por ejemplo duplicar, no afectaria.
+        [FiltroId]
         public ActionResult Borrar(int id)
         {
             var data = db.Almacen.Find(id);
