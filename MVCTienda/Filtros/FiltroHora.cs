@@ -4,7 +4,7 @@ using System.Web.Mvc;
 namespace MVCTienda.Filtros
 {
     //Los filtros, si quieres que afecte a todas las acciones de un controller, 
-    //hay que definirlo en el propio controller.
+    //hay que definirlo en el propio controller y como protected
     //Si quieres tener filtros de autenticación, por ejemplo, 
     //se define una clase BaseFiltro, de la que heredan todos los controllers
     public class FiltroHora:ActionFilterAttribute
