@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MVCTienda.Models.Producto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Listado de productos</h2>
+
+@foreach (var item in Model)
+{
+    <div class="col-md-4">
+        @Html.DisplayNameFor(o => o.Nombre)
+        @Html.DisplayFor(o => item.Nombre)
+        <br />
+        <h3>Almacenes</h3>
+        @*<ul>*@
+        @foreach (var alm in item.AlmacenProducto)
+        {
+            @Html.Partial("_fichaAlmacen", alm.Almacen)
+        }
+        @*</ul>*@
+        @Html.ActionLink("Ver", "Detalle", new { nombre=item.Nombre.Replace(" ","_") })
+    </div>
+
+}

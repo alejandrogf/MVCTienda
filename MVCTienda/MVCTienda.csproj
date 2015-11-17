@@ -136,6 +136,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AlmacenController.cs" />
     <Compile Include="Controllers\EtiquetaController.cs" />
+    <Compile Include="Controllers\ProductoAjaxController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Filtros\FiltroHora.cs" />
     <Compile Include="Filtros\FiltroId.cs" />
     <Compile Include="Global.asax.cs">
@@ -189,6 +191,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\_fichaAlmacen.cshtml" />
     <Content Include="Views\Etiqueta\Index.cshtml" />
+    <Content Include="Views\Producto\Index.cshtml" />
+    <Content Include="Views\Producto\Detalle.cshtml" />
+    <Content Include="Views\Producto\Alta.cshtml" />
+    <Content Include="Views\ProductoAjax\Index.cshtml" />
+    <Content Include="Views\Shared\_listadoProducto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -198,7 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Etiquetas\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

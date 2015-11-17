@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MVCTienda.Models.Producto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Listado Productos</h1>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+<input type="text" id="txtBusqueda" placeholder="Texto a buscar..."/>
+<input type="button" id="btnBuscar" value="Buscar"/>
+
+<div id="listado">
+    @Html.Partial("_listadoProducto", Model)
+</div>
+
+<div>
+    <input type="text" id="txtNombre" placeholder="Nombre"/>
+    <br/>
+    <input type="text" id="txtFabric" placeholder="Fabricante"/>
+    <br/>
+    <input type="text" id="txtPC" placeholder="Coste"/>
+    <br/>
+    <input type="text" id="txtPV" placeholder="Venta"/>
+    <br/><br/>
+    <input type="button" id="btnGuardar" value="Guardar"/>
+</div>
+
+
+@section MiJavaScript
+{
+    <script>
+
+        function alta() {
+            var data = {
+                Nombre: $("txtNombre").val(),
+                Fabricante: $("txtFabric").val(),
+                PCoste: $("txtPC").val(),
+                PVenta: $("txtPV").val(),
+                Categoria: 1
+            };
+            var url = "@Url.Action("Alta")";
+            $.ajax({
+                url: url,
+                data: JSON.stringify(data),
+                type: "POST",
+                headers: { "Content-Type": "application/json" },
+                dataType: "json",
+                succes: function(resultado) {
+                    if (resultado.idProducto > 0) {
+                        console.log();
+                        alert("Guardado");
+                        //volver a cargar
+                    } else {
+                        alert("Error al guardar");
+                    }
+                }
+            });
+        }
+
+        $("#btnGuardar").click(alta);
+        $("#btnBuscar").click(function() {
+            var url = "@Url.Action("Buscar")";
+            var texto = $("#txtBusqueda").val();
+            url += "?nombre=" + texto;
+
+            $("#listado").load(url);
+        });
+    </script>
+}
