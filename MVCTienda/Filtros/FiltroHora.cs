@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.Services.Description;
-using System.Web.UI;
 
 namespace MVCTienda.Filtros
 {
+    //Los filtros, si quieres que afecte a todas las acciones de un controller, 
+    //hay que definirlo en el propio controller.
+    //Si quieres tener filtros de autenticación, por ejemplo, 
+    //se define una clase BaseFiltro, de la que heredan todos los controllers
     public class FiltroHora:ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var hora = DateTime.Now;
-            if (hora.Minute > 35 && hora.Minute < 45)
+            if (hora.Minute < 30 || hora.Minute > 35)
             {
-                filterContext.Result = new HttpUnauthorizedResult();
+                filterContext.Result = 
+                    new HttpUnauthorizedResult("Servicio no disponible en este momento, fistrorrrrll!!");
             }
             base.OnActionExecuting(filterContext);
         }
