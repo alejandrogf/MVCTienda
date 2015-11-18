@@ -11,36 +11,63 @@
 </p>*@
 
 <input type="text" id="txtBusqueda" placeholder="Texto a buscar..."/>
-<input type="button" id="btnBuscar" value="Buscar"/>
+<input type="button" id="btnBuscar" value="Buscar"/><br/><br />
 
+@*data-toggle se usa para cambiar el estado de un objeto. En este caso cambia el estado de invisible a visible
+     Es una propiedad de bootstrapt y data-target indica quién es el receptor*@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">
+    Nuevo Producto
+</button>
+<br /><br />
 <div id="listado">
     @Html.Partial("_listadoProducto", Model)
 </div>
 
-<div>
-    <input type="text" id="txtNombre" placeholder="Nombre"/>
-    <br/>
-    <input type="text" id="txtFabric" placeholder="Fabricante"/>
-    <br/>
-    <input type="text" id="txtPC" placeholder="Coste"/>
-    <br/>
-    <input type="text" id="txtPV" placeholder="Venta"/>
-    <br/><br/>
-    <input type="button" id="btnGuardar" value="Guardar"/>
-</div>
+
+<div class="modal fade" id="modalAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    @* aria-label son etiquetas de accesibilidad y data-dismiss son etiquetas
+                        que indican un elemento a cerrar *@
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Nuevo Producto</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <input type="text" id="txtNombre" placeholder="Nombre" />
+                    <br />
+                    <input type="text" id="txtFabric" placeholder="Fabricante" />
+                    <br />
+                    <input type="text" id="txtPC" placeholder="Coste" />
+                    <br />
+                    <input type="text" id="txtPV" placeholder="Venta" />
+                    <br />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="btnGuardar" class="btn btn-primary">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 
 @section MiJavaScript
 {
     <script>
 
-        function alta() {
+      function alta() {
             var data = {
-                Nombre: $("txtNombre").val(),
-                Fabricante: $("txtFabric").val(),
-                PCoste: $("txtPC").val(),
-                PVenta: $("txtPV").val(),
-                Categoria: 1
+                nombre: $("#txtNombre").val(),
+                PCoste: $("#txtPC").val(),
+                PVenta: $("#txtPV").val(),
+                fabricante: $("#txtFabric").val(),
+                idCategoria: 1
             };
             var url = "@Url.Action("Alta")";
             $.ajax({
@@ -49,11 +76,14 @@
                 type: "POST",
                 headers: { "Content-Type": "application/json" },
                 dataType: "json",
-                succes: function(resultado) {
-                    if (resultado.idProducto > 0) {
-                        console.log();
+                success:function(res) {
+                    if (res.idProducto > 0) {
+                        //Otra opcion es hacerlo con javascript pero sigue siendo de bootstrap
+                        $("#modalAdd").modal('hide');
+                        $("#txtBusqueda").val("");
+                        listado();
                         alert("Guardado");
-                        //volver a cargar
+
                     } else {
                         alert("Error al guardar");
                     }
@@ -61,13 +91,17 @@
             });
         }
 
-        $("#btnGuardar").click(alta);
-        $("#btnBuscar").click(function() {
+        function listado() {
             var url = "@Url.Action("Buscar")";
             var texto = $("#txtBusqueda").val();
             url += "?nombre=" + texto;
 
-            $("#listado").load(url);
-        });
+            $("#listado").load(encodeURI(url));
+        }
+
+        $("#btnGuardar").click(alta);
+        $("#btnBuscar").click(listado);
+
     </script>
 }
+
